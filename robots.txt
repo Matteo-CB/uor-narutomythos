@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /php/
+Disallow: /config/
+Disallow: /vendor/
+
+Sitemap: https://matteocb-uor.alwaysdata.net/sitemap.xml
