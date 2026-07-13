@@ -1,0 +1,106 @@
+@charset "UTF-8";
+
+/* Feuille responsive du site perso de Matteo */
+/* Cours UOR, chapitre 3, exercice 3.2 (bonus) */
+/* Adaptation aux ecrans tablette et mobile, sans framework externe pour rester leger */
+
+/* ============================================================ */
+/* Tablette (jusqu'a 900px de large)                              */
+/* ============================================================ */
+
+@media (max-width: 900px) {
+
+  body { font-size: 16px; }
+
+  .menu-inner {
+    padding: 12px 18px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .menu-links { gap: 14px; }
+  .menu-links a { font-size: 12px; }
+
+  .hero { padding: 60px 20px 50px 20px; }
+  .hero h1 { font-size: 44px; }
+  .hero-sous-titre { font-size: 17px; }
+
+  .contenu { padding: 40px 20px 60px 20px; }
+
+  .bloc { margin-bottom: 50px; }
+  .bloc h2 { font-size: 24px; }
+
+  .img-flottante-droite {
+    max-width: 200px;
+    margin: 4px 0 10px 16px;
+  }
+
+  .carte-mv { max-width: 220px; }
+}
+
+/* ============================================================ */
+/* Mobile (jusqu'a 640px)                                         */
+/* ============================================================ */
+
+@media (max-width: 640px) {
+
+  .menu-inner { padding: 10px 14px; }
+
+  .menu-logo { font-size: 14px; }
+
+  .menu-links {
+    width: 100%;
+    justify-content: flex-start;
+    gap: 14px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+
+  .menu-links a {
+    font-size: 11px;
+    white-space: nowrap;
+  }
+
+  .hero { padding: 44px 16px 36px 16px; }
+  .hero h1 { font-size: 34px; }
+  .hero-sous-titre { font-size: 15px; }
+
+  .contenu { padding: 30px 16px 50px 16px; }
+
+  .bloc { margin-bottom: 40px; }
+  .bloc h2 {
+    font-size: 21px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  /* Image flottante repasse en bloc plein sur mobile */
+  .img-flottante-droite {
+    float: none;
+    max-width: 100%;
+    margin: 0 auto 16px auto;
+  }
+
+  /* Carte presentation passe en colonne */
+  .carte-texte,
+  .carte-image {
+    float: none;
+    width: 100%;
+    padding-right: 0;
+    margin-bottom: 18px;
+  }
+
+  .carte-mv { max-width: 240px; }
+
+  /* Tableau scrollable horizontal pour ne pas casser le layout */
+  .tableau-chiffres {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  /* Pied compact */
+  .pied { padding: 28px 16px; }
+}

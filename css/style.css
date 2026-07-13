@@ -1,0 +1,475 @@
+@charset "UTF-8";
+
+/* Feuille de style principale du site perso de Matteo */
+/* Cours UOR, chapitre 3, exercice 3.1 */
+/* Theme clair, sans-serif, sans degrade decoratif, animations pures */
+
+/* ============================================================ */
+/* 1. Variables et reset                                          */
+/* ============================================================ */
+
+:root {
+  --fond-page: #faf8f3;
+  --fond-surface: #ffffff;
+  --fond-bloc: #f4ede0;
+  --texte: #111111;
+  --texte-doux: #5e5e5e;
+  --texte-clair: #8a8a8a;
+  --accent: #c4413f;
+  --accent-or: #c79a3a;
+  --bordure: #e6dfd0;
+  --bordure-foncee: #c8bfac;
+
+  --serre: 0.08em;
+  --large: 0.18em;
+  --rayon: 6px;
+
+  --duree-rapide: 180ms;
+  --duree-moyenne: 320ms;
+  --duree-lente: 600ms;
+  --courbe: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: "Segoe UI", "Segoe UI Variable", Tahoma, Verdana, Geneva, sans-serif;
+  background-color: var(--fond-page);
+  color: var(--texte);
+  line-height: 1.65;
+  font-size: 17px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--duree-rapide) var(--courbe), color var(--duree-rapide) var(--courbe);
+}
+
+a:hover {
+  color: var(--texte);
+  border-bottom-color: var(--texte);
+}
+
+img { max-width: 100%; height: auto; display: block; }
+
+/* ============================================================ */
+/* 2. Menu de navigation principal                                */
+/* ============================================================ */
+
+.menu-principal {
+  background-color: var(--fond-surface);
+  border-bottom: 1px solid var(--bordure);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.menu-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.menu-logo {
+  font-weight: 700;
+  font-size: 17px;
+  color: var(--texte);
+  letter-spacing: 0;
+  border-bottom: none;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.menu-logo .marque {
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.menu-logo .marque-sub {
+  font-size: 11px;
+  color: var(--texte-clair);
+  text-transform: uppercase;
+  letter-spacing: var(--large);
+  font-weight: 500;
+}
+
+.menu-logo:hover .marque { color: var(--accent); transition: color var(--duree-rapide) var(--courbe); }
+
+.logo-dot {
+  display: inline-block;
+  color: var(--accent);
+  animation: pulse-dot 2.4s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.45; transform: scale(0.85); }
+}
+
+.menu-links {
+  list-style: none;
+  display: flex;
+  gap: 26px;
+}
+
+.menu-links a {
+  font-size: 14px;
+  color: var(--texte-doux);
+  text-transform: uppercase;
+  letter-spacing: var(--large);
+  font-weight: 500;
+  position: relative;
+  padding: 6px 0;
+  border-bottom: none;
+}
+
+.menu-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 1px;
+  width: 100%;
+  background-color: var(--texte);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--duree-moyenne) var(--courbe);
+}
+
+.menu-links a:hover { color: var(--texte); }
+.menu-links a:hover::after { transform: scaleX(1); }
+
+.menu-links a.actif {
+  color: var(--texte);
+}
+
+.menu-links a.actif::after {
+  transform: scaleX(1);
+  background-color: var(--accent);
+}
+
+/* ============================================================ */
+/* 3. Header / hero                                               */
+/* ============================================================ */
+
+.hero {
+  padding: 110px 24px 70px 24px;
+  background-color: var(--fond-page);
+  border-bottom: 1px solid var(--bordure);
+}
+
+.hero-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: left;
+  animation: fade-in-up var(--duree-lente) var(--courbe) both;
+}
+
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hero-petite {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: var(--large);
+  color: var(--texte-clair);
+  margin-bottom: 14px;
+}
+
+.hero h1 {
+  font-size: 64px;
+  line-height: 1.05;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 18px;
+}
+
+.hero h1 .accent {
+  color: var(--accent);
+  display: inline-block;
+  position: relative;
+}
+
+.hero-sous-titre {
+  font-size: 20px;
+  color: var(--texte-doux);
+  line-height: 1.55;
+  max-width: 720px;
+  margin-bottom: 30px;
+}
+
+.hero-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.tag {
+  display: inline-block;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: var(--large);
+  color: var(--texte-doux);
+  padding: 7px 14px;
+  background-color: var(--fond-surface);
+  border: 1px solid var(--bordure);
+  border-radius: 999px;
+}
+
+.tag:hover {
+  background-color: var(--texte);
+  color: var(--fond-surface);
+  border-color: var(--texte);
+  transition: background-color var(--duree-rapide) var(--courbe), color var(--duree-rapide) var(--courbe);
+}
+
+/* ============================================================ */
+/* 4. Contenu principal et blocs                                  */
+/* ============================================================ */
+
+.contenu {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 60px 24px 80px 24px;
+}
+
+.bloc {
+  margin-bottom: 70px;
+  animation: fade-in-up var(--duree-lente) var(--courbe) both;
+  animation-delay: 80ms;
+}
+
+.bloc-inner { }
+
+.bloc h2 {
+  font-size: 30px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin-bottom: 24px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--bordure);
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+}
+
+.bloc h2 .numero {
+  font-size: 13px;
+  color: var(--accent);
+  letter-spacing: var(--large);
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+.bloc p {
+  margin-bottom: 16px;
+  color: var(--texte);
+}
+
+.bloc p:last-child { margin-bottom: 0; }
+
+/* ============================================================ */
+/* 5. Texte illustre, float + clear (consigne 3.1)               */
+/* ============================================================ */
+
+.texte-illustre { overflow: visible; }
+
+.img-flottante-droite {
+  float: right;
+  margin: 6px 0 14px 24px;
+  max-width: 280px;
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon);
+  padding: 6px;
+  background-color: var(--fond-surface);
+}
+
+.clear {
+  clear: both;
+  display: block;
+  height: 0;
+}
+
+/* ============================================================ */
+/* 6. Figures larges (boutique, simulateur)                       */
+/* ============================================================ */
+
+.figure-large {
+  margin: 30px 0;
+  background-color: var(--fond-surface);
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon);
+  overflow: hidden;
+}
+
+.figure-large img {
+  width: 100%;
+  display: block;
+  transition: transform var(--duree-moyenne) var(--courbe);
+}
+
+.figure-large:hover img { transform: scale(1.015); }
+
+.figure-large figcaption {
+  font-size: 14px;
+  color: var(--texte-doux);
+  padding: 12px 18px;
+  border-top: 1px solid var(--bordure);
+  background-color: var(--fond-bloc);
+}
+
+/* ============================================================ */
+/* 7. Presentation de la carte (float gauche / droite)            */
+/* ============================================================ */
+
+.carte-presentation { }
+
+.carte-texte {
+  float: left;
+  width: 58%;
+  padding-right: 30px;
+}
+
+.carte-image {
+  float: right;
+  width: 40%;
+  display: flex;
+  justify-content: center;
+}
+
+/* Carte Mythos Variant (Gaara) sur l'accueil.                              */
+/* Effet repris de styles/holo-card.css du simulateur Naruto Mythos.        */
+/* Inclinaison 3D qui suit le pointeur + shine holographique dore qui se    */
+/* deplace, + glare radial.                                                  */
+
+.carte-mv-wrap {
+  --card-mx: 50%;
+  --card-my: 50%;
+  --card-posx: 50%;
+  --card-posy: 50%;
+  --card-rx: 0deg;
+  --card-ry: 0deg;
+  --card-o: 0;
+  --card-hyp: 0;
+
+  position: relative;
+  display: inline-block;
+  max-width: 280px;
+  perspective: 800px;
+  transition: transform var(--duree-moyenne) var(--courbe);
+  cursor: pointer;
+}
+
+.carte-mv-wrap:hover {
+  transform: translateY(-4px);
+}
+
+.carte-mv-cadre {
+  position: relative;
+  display: block;
+  border-radius: 10px;
+  overflow: hidden;
+  transform-style: preserve-3d;
+  transform: rotateY(var(--card-ry)) rotateX(var(--card-rx));
+  transition: transform 220ms var(--courbe), box-shadow 220ms var(--courbe);
+  will-change: transform;
+  box-shadow: 0 12px 30px rgba(20, 14, 4, 0.25);
+  isolation: isolate;
+  /* Fond noir permanent sous l'image, comme dans le simulateur */
+  background-color: #0a0a0a;
+}
+
+.carte-mv-wrap.est-survolee .carte-mv-cadre {
+  box-shadow:
+    0 0 8px 0 rgba(216, 183, 92, 0.25),
+    0 0 20px 0 rgba(216, 183, 92, 0.18),
+    0 18px 38px rgba(20, 14, 4, 0.35);
+}
+
+.carte-mv {
+  width: 100%;
+  display: block;
+  border-radius: inherit;
+  position: relative;
+  z-index: 0;
+}
+
+/* Couche holographique doree (palette Mythos), suit le pointeur.            */
+/* Volontairement adoucie pour ne pas piquer les yeux : brightness/contrast  */
+/* reduits, opacite max plafonnee a 0.55 via calc().                          */
+.carte-holo-mv {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  border-radius: inherit;
+  opacity: calc(var(--card-o) * 0.55);
+  transition: opacity 240ms var(--courbe);
+  background-image: repeating-linear-gradient(
+    110deg,
+    rgba(89, 46, 80, 0.35) 0%,
+    hsl(39, 30%, 55%) 2.5%,
+    rgb(196, 168, 96) 5%,
+    hsl(39, 30%, 55%) 7.5%,
+    rgba(14, 21, 46, 0.35) 10%,
+    rgba(14, 21, 46, 0.35) 15%
+  );
+  background-size: 600% 600%;
+  background-position: var(--card-posx) var(--card-posy);
+  background-blend-mode: darken;
+  mix-blend-mode: color-dodge;
+  filter: brightness(calc((var(--card-hyp) * 0.25) + 0.5)) contrast(1.8) saturate(0.5);
+}
+
+.carte-holo-mv::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-image: repeating-linear-gradient(
+    110deg,
+    rgba(89, 46, 80, 0.3) 0%,
+    hsl(39, 30%, 55%) 2.5%,
+    rgb(196, 168, 96) 5%,
+    hsl(39, 30%, 55%) 7.5%,
+    rgba(14, 21, 46, 0.3) 10%,
+    rgba(14, 21, 46, 0.3) 15%
+  );
+  background-position: 0% 0%;
+  background-size: 300% 300%;
+  mix-blend-mode: color-dodge;
+  opacity: calc(var(--card-o, 0) * 0.6);
+  pointer-events: none;
+}
+
+/* Pied de page (footer) minimal dans le theme clair du site */
+.pied {
+  margin-top: 96px;
+  padding: 28px 24px;
+  border-top: 1px solid var(--bordure);
+  background-color: var(--fond-bloc);
+  color: var(--texte-doux);
+}
+.pied-inner {
+  max-width: 1080px;
+  margin: 0 auto;
+}
+.pied-signature {
+  margin: 0;
+  font-size: 12px;
+  letter-spacing: var(--large);
+  text-transform: uppercase;
+  color: var(--texte-doux);
+}

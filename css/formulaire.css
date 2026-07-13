@@ -1,0 +1,199 @@
+@charset "UTF-8";
+
+/* Feuille de style du formulaire d'inscription */
+/* Cours UOR, exercice 5.1                       */
+
+.formulaire {
+  background-color: var(--fond-surface);
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon);
+  padding: 28px 30px;
+  margin-bottom: 8px;
+}
+
+.champ {
+  margin-bottom: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.champ:last-child { margin-bottom: 0; }
+
+.champ label {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: var(--large);
+  color: var(--texte-doux);
+}
+
+.champ small {
+  font-size: 12px;
+  color: var(--texte-clair);
+  line-height: 1.5;
+  margin-top: 2px;
+}
+
+.champ input[type="text"],
+.champ input[type="email"],
+.champ select,
+.champ textarea {
+  font-family: inherit;
+  font-size: 15px;
+  padding: 11px 14px;
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon);
+  background-color: var(--fond-page);
+  color: var(--texte);
+  transition: border-color var(--duree-rapide) var(--courbe), background-color var(--duree-rapide) var(--courbe);
+}
+
+.champ input:focus,
+.champ select:focus,
+.champ textarea:focus {
+  outline: none;
+  border-color: var(--texte);
+  background-color: var(--fond-surface);
+}
+
+.champ textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+
+.champ select {
+  appearance: none;
+  cursor: pointer;
+}
+
+.radios {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.radio {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon);
+  background-color: var(--fond-page);
+  cursor: pointer;
+  font-size: 14px;
+  letter-spacing: 0;
+  text-transform: none;
+  font-weight: 400;
+  color: var(--texte);
+  transition: border-color var(--duree-rapide) var(--courbe), background-color var(--duree-rapide) var(--courbe);
+}
+
+.radio:hover {
+  border-color: var(--bordure-foncee);
+}
+
+.radio input[type="radio"] {
+  accent-color: var(--accent);
+  margin: 0;
+}
+
+.radio span {
+  flex: 1;
+}
+
+.radio input[type="radio"]:checked + span {
+  font-weight: 600;
+}
+
+.champ-soumission {
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+.bouton-principal {
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: var(--serre);
+  text-transform: uppercase;
+  padding: 14px 28px;
+  background-color: var(--texte);
+  color: var(--fond-surface);
+  border: 1px solid var(--texte);
+  border-radius: var(--rayon);
+  cursor: pointer;
+  transition: background-color var(--duree-rapide) var(--courbe), transform var(--duree-rapide) var(--courbe);
+}
+
+.bouton-principal:hover {
+  background-color: var(--accent);
+  border-color: var(--accent);
+}
+
+.bouton-principal:active {
+  transform: scale(0.97);
+}
+
+/* ============================================================ */
+/* Page de confirmation                                           */
+/* ============================================================ */
+
+.confirmation {
+  background-color: var(--fond-surface);
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon);
+  padding: 30px;
+}
+
+.confirmation .succes {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: var(--large);
+  color: var(--accent);
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.confirmation table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 18px 0;
+}
+
+.confirmation th,
+.confirmation td {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--bordure);
+  text-align: left;
+  font-size: 14px;
+}
+
+.confirmation th {
+  width: 30%;
+  font-weight: 600;
+  color: var(--texte-doux);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: var(--large);
+}
+
+.confirmation .erreur {
+  color: var(--accent);
+  background-color: #fff5f4;
+  border: 1px solid var(--accent);
+  padding: 14px 18px;
+  border-radius: var(--rayon);
+  margin: 16px 0;
+  font-size: 14px;
+}
+
+@media (max-width: 640px) {
+  .formulaire { padding: 20px 18px; }
+  .champ-soumission { justify-content: stretch; }
+  .bouton-principal { width: 100%; }
+}

@@ -1,0 +1,461 @@
+@charset "UTF-8";
+
+/* Feuille de style specifique a la page galerie de cartes */
+/* Cours UOR, exercices 6.1 (DOM) et 3.1 (CSS) */
+/* Effet holographique adapte de mon simulateur Naruto Mythos */
+/* (techniques : color-dodge + couches en repeating-linear-gradient,    */
+/*  tracking pointeur via variables CSS --card-mx, --card-my, etc.)     */
+
+/* ============================================================ */
+/* Hero variante pour page interne                                */
+/* ============================================================ */
+
+.hero-page {
+  padding: 70px 24px 40px 24px;
+}
+
+.contenu-large {
+  max-width: 1100px;
+}
+
+/* ============================================================ */
+/* Bandeau de filtres                                             */
+/* ============================================================ */
+
+.filtres {
+  background-color: var(--fond-surface);
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon);
+  padding: 20px 22px;
+  margin-bottom: 36px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 22px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.filtre-groupe {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.filtre-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: var(--large);
+  color: var(--texte-clair);
+  font-weight: 500;
+}
+
+.filtre-boutons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.filtre-btn {
+  font-family: inherit;
+  font-size: 13px;
+  padding: 7px 13px;
+  background-color: var(--fond-page);
+  color: var(--texte-doux);
+  border: 1px solid var(--bordure);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background-color var(--duree-rapide) var(--courbe), color var(--duree-rapide) var(--courbe), border-color var(--duree-rapide) var(--courbe), transform var(--duree-rapide) var(--courbe);
+  letter-spacing: 0.02em;
+}
+
+.filtre-btn:hover {
+  color: var(--texte);
+  border-color: var(--bordure-foncee);
+}
+
+.filtre-btn:active { transform: scale(0.96); }
+
+.filtre-btn.actif {
+  background-color: var(--texte);
+  color: var(--fond-surface);
+  border-color: var(--texte);
+}
+
+.filtre-slider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 200px;
+}
+
+.filtre-slider input[type="range"] {
+  flex: 1;
+  cursor: pointer;
+}
+
+.slider-valeur {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--texte);
+  min-width: 16px;
+  text-align: center;
+}
+
+.filtre-resultat {
+  font-size: 13px;
+  color: var(--texte-doux);
+  letter-spacing: 0.02em;
+  margin-left: auto;
+}
+
+.filtre-resultat #compteur-cartes {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* ============================================================ */
+/* Grille de cartes                                               */
+/* ============================================================ */
+
+.grille-cartes {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 26px;
+}
+
+/* ============================================================ */
+/* La carte elle-meme, conteneur 3D                               */
+/* On declare ici les variables CSS qui seront mises a jour par   */
+/* le script JS au mouvement de la souris.                        */
+/* ============================================================ */
+
+.carte {
+  --card-mx: 50%;
+  --card-my: 50%;
+  --card-o: 0;
+  --card-rx: 0deg;
+  --card-ry: 0deg;
+  --card-posx: 50%;
+  --card-posy: 50%;
+  --card-hyp: 0;
+
+  background-color: var(--fond-surface);
+  border: 1px solid var(--bordure);
+  border-radius: 12px;
+  overflow: visible;
+  transition: opacity var(--duree-moyenne) var(--courbe), transform var(--duree-moyenne) var(--courbe);
+  position: relative;
+  perspective: 800px;
+  transform-style: preserve-3d;
+}
+
+.carte.est-masquee { display: none; }
+
+.carte-cadre {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 240 / 330;
+  /* Fond noir permanent (cf. holo-card.css du simulateur, .holo-card__front) */
+  background-color: #0a0a0a;
+  border-radius: 12px 12px 0 0;
+  transform-style: preserve-3d;
+  transform: rotateY(var(--card-ry)) rotateX(var(--card-rx));
+  transition: transform 220ms var(--courbe), box-shadow 220ms var(--courbe);
+  will-change: transform;
+}
+
+.carte.est-survolee .carte-cadre {
+  box-shadow:
+    0 0 8px 0 rgba(196, 163, 90, 0.22),
+    0 0 22px 0 rgba(196, 163, 90, 0.18);
+}
+
+.carte-cadre img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: inherit;
+  z-index: 1;
+}
+
+/* Pastille de rarete en haut a droite */
+.carte-rarete-pastille {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 30;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-color: var(--fond-surface);
+  color: var(--texte);
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 0.02em;
+  border: 1px solid var(--bordure);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+.carte-rarete-pastille[data-rarete="C"]  { background-color: #ffffff; color: #6b6b6b; }
+.carte-rarete-pastille[data-rarete="UC"] { background-color: #4d8a4d; color: #ffffff; border-color: #4d8a4d; }
+.carte-rarete-pastille[data-rarete="R"]  { background-color: #d4a544; color: #1a1a1a; border-color: #d4a544; }
+.carte-rarete-pastille[data-rarete="S"]  { background-color: #7d3fc1; color: #ffffff; border-color: #7d3fc1; }
+.carte-rarete-pastille[data-rarete="M"]  { background-color: #c4413f; color: #ffffff; border-color: #c4413f; }
+.carte-rarete-pastille[data-rarete="L"]  { background-color: #1a1a1a; color: #f0c845; border-color: #f0c845; }
+
+/* ============================================================ */
+/* Effet holographique fidele au menu du simulateur               */
+/* (adapte de styles/holo-card.css de mon projet Naruto Mythos)   */
+/* Suit le pointeur en 3D, shine holographique mouvant, glare.    */
+/* ============================================================ */
+
+.carte-holo {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10;
+  border-radius: inherit;
+  /* On plafonne l'opacite max a 0.5 pour eviter la brulure des yeux */
+  opacity: calc(var(--card-o) * 0.5);
+  transition: opacity 240ms var(--courbe);
+  mix-blend-mode: color-dodge;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      rgb(220, 130, 130) 0%,
+      rgba(220, 200, 130, 1) 6%,
+      rgba(160, 220, 130, 1) 12%,
+      rgba(140, 220, 220, 1) 18%,
+      rgba(140, 160, 220, 1) 24%,
+      rgb(190, 140, 220) 30%,
+      rgb(220, 130, 130) 36%
+    ),
+    repeating-linear-gradient(
+      133deg,
+      #0e152e 0%,
+      hsl(180, 10%, 55%) 3.8%,
+      hsl(180, 20%, 60%) 4.5%,
+      hsl(180, 10%, 55%) 5.2%,
+      #0e152e 10%,
+      #0e152e 12%
+    );
+  background-blend-mode: screen, hue;
+  background-size: 200% 700%, 300% 300%;
+  background-position: 0% var(--card-posy), var(--card-posx) var(--card-posy);
+  filter: brightness(0.7) contrast(1.8) saturate(0.55);
+}
+
+.carte-holo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-image: repeating-linear-gradient(
+    0deg,
+    rgb(220, 130, 130) 0%,
+    rgba(220, 200, 130, 1) 6%,
+    rgba(160, 220, 130, 1) 12%,
+    rgba(140, 220, 220, 1) 18%,
+    rgba(140, 160, 220, 1) 24%,
+    rgb(190, 140, 220) 30%,
+    rgb(220, 130, 130) 36%
+  );
+  background-position: 0% calc(var(--card-posy) * -1);
+  background-size: 200% 400%;
+  filter: brightness(0.85) contrast(1.6) saturate(1);
+  mix-blend-mode: soft-light;
+  opacity: 0.55;
+}
+
+/* Palette doree adoucie pour Secret et Mythos */
+.carte[data-rarete="S"] .carte-holo,
+.carte[data-rarete="M"] .carte-holo {
+  background-image: repeating-linear-gradient(
+    110deg,
+    rgba(89, 46, 80, 0.35) 0%,
+    hsl(39, 30%, 55%) 2.5%,
+    rgb(196, 168, 96) 5%,
+    hsl(39, 30%, 55%) 7.5%,
+    rgba(14, 21, 46, 0.35) 10%,
+    rgba(14, 21, 46, 0.35) 15%
+  );
+  background-size: 600% 600%;
+  background-position: var(--card-posx) var(--card-posy);
+  background-blend-mode: darken;
+  filter: brightness(calc((var(--card-hyp) * 0.25) + 0.5)) contrast(1.8) saturate(0.5);
+}
+
+.carte[data-rarete="S"] .carte-holo::after,
+.carte[data-rarete="M"] .carte-holo::after {
+  background-image: repeating-linear-gradient(
+    110deg,
+    rgba(89, 46, 80, 0.3) 0%,
+    hsl(39, 30%, 55%) 2.5%,
+    rgb(196, 168, 96) 5%,
+    hsl(39, 30%, 55%) 7.5%,
+    rgba(14, 21, 46, 0.3) 10%,
+    rgba(14, 21, 46, 0.3) 15%
+  );
+  background-position: calc(var(--card-posx) * -1) calc(var(--card-posy) * -1);
+  background-size: 600% 600%;
+  filter: brightness(calc((var(--card-hyp) * 0.2) + 0.5)) contrast(1.6) saturate(0.45);
+  mix-blend-mode: soft-light;
+  opacity: 0.6;
+}
+
+/* Palette or adoucie pour Legendary */
+.carte[data-rarete="L"] .carte-holo {
+  background-image: repeating-linear-gradient(
+    110deg,
+    rgba(180, 80, 20, 0.4) 0%,
+    hsl(45, 60%, 55%) 2%,
+    rgb(220, 180, 60) 4%,
+    hsl(45, 60%, 55%) 6%,
+    rgba(180, 80, 20, 0.4) 8%,
+    rgba(10, 10, 30, 0.35) 12%
+  );
+  background-size: 600% 600%;
+  background-position: var(--card-posx) var(--card-posy);
+  background-blend-mode: darken;
+  filter: brightness(calc((var(--card-hyp) * 0.3) + 0.55)) contrast(2) saturate(0.6);
+}
+
+.carte[data-rarete="L"] .carte-holo::after {
+  background-image: repeating-linear-gradient(
+    110deg,
+    rgba(180, 80, 20, 0.3) 0%,
+    hsl(45, 60%, 55%) 2%,
+    rgb(220, 180, 60) 4%,
+    hsl(45, 60%, 55%) 6%,
+    rgba(180, 80, 20, 0.3) 8%,
+    rgba(10, 10, 30, 0.3) 12%
+  );
+  background-position: calc(var(--card-posx) * -1) calc(var(--card-posy) * -1);
+  background-size: 600% 600%;
+  filter: brightness(calc((var(--card-hyp) * 0.25) + 0.55)) contrast(1.8) saturate(0.6);
+  mix-blend-mode: soft-light;
+  opacity: 0.6;
+}
+
+/* Glare radial blanc adouci qui suit le pointeur */
+.carte-glare {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 20;
+  border-radius: inherit;
+  opacity: calc(var(--card-o) * 0.45);
+  transition: opacity 240ms var(--courbe);
+  background-image: radial-gradient(
+    farthest-corner circle at var(--card-mx) var(--card-my),
+    rgba(255, 255, 255, 0.22) 10%,
+    rgba(255, 255, 255, 0.08) 28%,
+    rgba(0, 0, 0, 0.35) 90%
+  );
+  mix-blend-mode: overlay;
+}
+
+/* ============================================================ */
+/* Informations sous la carte                                     */
+/* ============================================================ */
+
+.carte-info {
+  padding: 14px 16px 18px 16px;
+  position: relative;
+  z-index: 2;
+  background-color: var(--fond-surface);
+  border-radius: 0 0 12px 12px;
+}
+
+.carte-info h3 {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  margin-bottom: 4px;
+  color: var(--texte);
+}
+
+.carte-titre {
+  font-size: 13px;
+  color: var(--texte-doux);
+  font-style: italic;
+  margin-bottom: 12px;
+}
+
+.carte-stats {
+  display: flex;
+  gap: 14px;
+  padding-top: 10px;
+  border-top: 1px solid var(--bordure);
+  font-size: 12px;
+  color: var(--texte-clair);
+  letter-spacing: 0.02em;
+}
+
+.carte-stats strong { color: var(--texte); font-weight: 600; }
+
+/* ============================================================ */
+/* Message si aucune carte ne correspond                          */
+/* ============================================================ */
+
+.aucun-resultat {
+  margin-top: 40px;
+  padding: 36px 24px;
+  text-align: center;
+  background-color: var(--fond-surface);
+  border: 1px dashed var(--bordure);
+  border-radius: var(--rayon);
+}
+
+.aucun-resultat p {
+  color: var(--texte-doux);
+  margin-bottom: 18px;
+}
+
+/* ============================================================ */
+/* Animation d'apparition cascade des cartes au chargement        */
+/* ============================================================ */
+
+.grille-cartes .carte {
+  opacity: 0;
+  animation: apparait 460ms var(--courbe) both;
+}
+
+.grille-cartes .carte:nth-child(1) { animation-delay: 40ms; }
+.grille-cartes .carte:nth-child(2) { animation-delay: 80ms; }
+.grille-cartes .carte:nth-child(3) { animation-delay: 120ms; }
+.grille-cartes .carte:nth-child(4) { animation-delay: 160ms; }
+.grille-cartes .carte:nth-child(5) { animation-delay: 200ms; }
+.grille-cartes .carte:nth-child(6) { animation-delay: 240ms; }
+.grille-cartes .carte:nth-child(7) { animation-delay: 280ms; }
+.grille-cartes .carte:nth-child(8) { animation-delay: 320ms; }
+.grille-cartes .carte:nth-child(9) { animation-delay: 360ms; }
+.grille-cartes .carte:nth-child(10) { animation-delay: 400ms; }
+.grille-cartes .carte:nth-child(11) { animation-delay: 440ms; }
+.grille-cartes .carte:nth-child(12) { animation-delay: 480ms; }
+.grille-cartes .carte:nth-child(13) { animation-delay: 520ms; }
+
+@keyframes apparait {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================================ */
+/* Responsive                                                     */
+/* ============================================================ */
+
+@media (max-width: 900px) {
+  .filtres { flex-direction: column; align-items: stretch; gap: 14px; }
+  .filtre-resultat { margin-left: 0; }
+}
+
+@media (max-width: 640px) {
+  .grille-cartes { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 14px; }
+  .carte-info { padding: 10px 12px 14px 12px; }
+}
