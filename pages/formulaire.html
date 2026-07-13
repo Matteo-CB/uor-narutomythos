@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Newsletter Naruto Mythos, inscription | Matteo Chanté-Biyikli</title>
+<meta name="description" content="Formulaire d'inscription à la newsletter Naruto Mythos avec traitement PHP et stockage MySQL. Cinq champs, validation côté serveur, requêtes préparées.">
+<meta name="author" content="Matteo Chanté-Biyikli">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Newsletter Naruto Mythos, inscription">
+<meta property="og:description" content="Formulaire d'inscription à la newsletter du simulateur Naruto Mythos Game.">
+
+<meta name="DC.title" content="Formulaire d'inscription Naruto Mythos">
+<meta name="DC.creator" content="Matteo Chanté-Biyikli">
+<meta name="DC.subject" content="formulaire, PHP, MySQL, base de donnees, inscription">
+
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/formulaire.css">
+<link rel="stylesheet" href="../css/responsive.css">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+</head>
+<body>
+
+<nav class="menu-principal" aria-label="Navigation principale">
+<div class="menu-inner">
+<a href="../index.html" class="menu-logo"><span class="marque">Matteo<span class="logo-dot">.</span></span><span class="marque-sub">L1 IED</span></a>
+<ul class="menu-links">
+<li><a href="../index.html">Accueil</a></li>
+<li><a href="cartes.html">Cartes</a></li>
+<li><a href="formulaire.html" class="actif">Newsletter</a></li>
+<li><a href="chatbot.html">Chatbot</a></li>
+<li><a href="sources.html">Sources</a></li>
+</ul>
+</div>
+</nav>
+
+<header class="hero hero-page">
+<div class="hero-inner">
+<p class="hero-petite">Exercice 5.1, PHP et MySQL</p>
+<h1>Rejoindre la <span class="accent">newsletter</span></h1>
+<p class="hero-sous-titre">Le formulaire ci-dessous est traité par un script PHP qui enregistre les inscriptions dans une base MySQL hébergée chez AlwaysData. Cinq champs, validation côté serveur, requêtes préparées PDO, mot de passe stocké hors du dossier www.</p>
+</div>
+</header>
+
+<main class="contenu">
+
+<section class="bloc">
+<div class="bloc-inner">
+<h2><span class="numero">01</span> Inscription</h2>
+
+<form action="../php/inscrire.php" method="post" class="formulaire" novalidate>
+
+<div class="champ">
+<label for="pseudo">Pseudo en jeu</label>
+<input type="text" id="pseudo" name="pseudo" required minlength="3" maxlength="40" placeholder="ex : Matteo-CB" autocomplete="username">
+<small>Entre 3 et 40 caractères, c'est le nom qu'on verra sur le leaderboard.</small>
+</div>
+
+<div class="champ">
+<label for="email">Adresse email</label>
+<input type="email" id="email" name="email" required maxlength="120" placeholder="ex : prenom.nom@exemple.fr" autocomplete="email">
+<small>Pour recevoir les annonces de tournois et les sorties de nouveaux sets. Pas de revente, jamais.</small>
+</div>
+
+<div class="champ">
+<label for="set_pref">Set de cartes préféré</label>
+<select id="set_pref" name="set_pref" required>
+<option value="">Choisis un set</option>
+<option value="KS">Konoha Shido (KS), set actuel</option>
+<option value="SS">Shinobi Shiren (SS), à venir</option>
+<option value="AK">Akatsuki (AK), à venir</option>
+<option value="aucun">Pas encore de préférence</option>
+</select>
+<small>On t'envoie les nouveautés en priorité sur le set que tu préfères.</small>
+</div>
+
+<div class="champ">
+<label>Niveau actuel</label>
+<div class="radios">
+<label class="radio">
+<input type="radio" name="niveau" value="debutant" required>
+<span>Débutant, je découvre le jeu</span>
+</label>
+<label class="radio">
+<input type="radio" name="niveau" value="intermediaire">
+<span>Intermédiaire, j'enchaîne les parties</span>
+</label>
+<label class="radio">
+<input type="radio" name="niveau" value="competitif">
+<span>Compétitif, je vise les tournois</span>
+</label>
+</div>
+</div>
+
+<div class="champ">
+<label for="message">Un mot libre</label>
+<textarea id="message" name="message" rows="5" maxlength="600" placeholder="Tu peux laisser une suggestion, un retour sur le simulateur, ou juste un bonjour."></textarea>
+<small>Optionnel, 600 caractères maximum.</small>
+</div>
+
+<div class="champ champ-soumission">
+<button type="submit" class="bouton-principal">M'inscrire à la newsletter</button>
+</div>
+
+</form>
+</div>
+</section>
+
+<section class="bloc">
+<div class="bloc-inner">
+<h2><span class="numero">02</span> Comment ça fonctionne côté serveur</h2>
+<p>Quand tu valides le formulaire, le navigateur envoie une requête HTTP POST au fichier <code>php/inscrire.php</code>. Le serveur Apache d'AlwaysData reçoit la requête et la délègue au moteur PHP 8. Le script PHP fait alors trois choses :</p>
+<ol class="liste-features">
+<li>Il vérifie que tous les champs sont présents et que l'email a une forme valide via la fonction <code>filter_var</code>.</li>
+<li>Il insère la nouvelle inscription dans la table <code>inscriptions</code> de la base MySQL <em>matteocb-uor_naruto</em>, via une requête préparée PDO pour éviter toute injection SQL.</li>
+<li>Il renvoie une page de confirmation HTML avec un résumé de l'inscription, ou un message d'erreur si quelque chose n'a pas marché.</li>
+</ol>
+<p>Le schéma de la table et le code PHP complet sont expliqués dans le PDF rendu pour le cours.</p>
+</div>
+</section>
+
+</main>
+
+<footer class="pied">
+<div class="pied-inner">
+<p class="pied-signature">Matteo Chanté-Biyikli, 2026</p>
+</div>
+</footer>
+
+</body>
+</html>
