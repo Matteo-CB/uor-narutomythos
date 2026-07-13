@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Cartes Naruto Mythos, filtre interactif | Matteo Chanté-Biyikli</title>
+<meta name="description" content="Galerie interactive de cartes du set Konoha Shido du jeu Naruto Mythos TCG, avec filtres en JavaScript (rareté, groupe, puissance).">
+<meta name="author" content="Matteo Chanté-Biyikli">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Galerie interactive de cartes Naruto Mythos">
+<meta property="og:description" content="Sélection de cartes du set KS avec filtre en JavaScript pur.">
+<meta property="og:image" content="../images/ks-120-mv-gaara.webp">
+
+<meta name="DC.title" content="Galerie interactive de cartes Naruto Mythos">
+<meta name="DC.creator" content="Matteo Chanté-Biyikli">
+<meta name="DC.subject" content="cartes, jeu, JavaScript, DOM, filtre interactif">
+
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/cartes.css">
+<link rel="stylesheet" href="../css/responsive.css">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+</head>
+<body>
+
+<!-- Menu de navigation, identique sur toutes les pages -->
+<nav class="menu-principal" aria-label="Navigation principale">
+<div class="menu-inner">
+<a href="../index.html" class="menu-logo"><span class="marque">Matteo<span class="logo-dot">.</span></span><span class="marque-sub">L1 IED</span></a>
+<ul class="menu-links">
+<li><a href="../index.html">Accueil</a></li>
+<li><a href="cartes.html" class="actif">Cartes</a></li>
+<li><a href="formulaire.html">Newsletter</a></li>
+<li><a href="chatbot.html">Chatbot</a></li>
+<li><a href="sources.html">Sources</a></li>
+</ul>
+</div>
+</nav>
+
+<header class="hero hero-page">
+<div class="hero-inner">
+<p class="hero-petite">Exercice 6.1, DOM JavaScript</p>
+<h1>Galerie de <span class="accent">cartes</span></h1>
+<p class="hero-sous-titre">Une selection du set Konoha Shido du jeu Naruto Mythos TCG. Tu peux filtrer la galerie en direct par rareté ou par groupe, le DOM se met à jour sans recharger la page.</p>
+</div>
+</header>
+
+<main class="contenu contenu-large">
+
+<!-- Bandeau de filtres, controle le DOM via JavaScript -->
+<section class="filtres" aria-label="Filtres de cartes">
+<div class="filtre-groupe">
+<span class="filtre-label">Rareté</span>
+<div class="filtre-boutons" id="filtres-rarete">
+<button type="button" class="filtre-btn actif" data-filtre="rarete" data-valeur="toutes">Toutes</button>
+<button type="button" class="filtre-btn" data-filtre="rarete" data-valeur="C">Commune</button>
+<button type="button" class="filtre-btn" data-filtre="rarete" data-valeur="UC">Peu commune</button>
+<button type="button" class="filtre-btn" data-filtre="rarete" data-valeur="R">Rare</button>
+<button type="button" class="filtre-btn" data-filtre="rarete" data-valeur="S">Secrete</button>
+<button type="button" class="filtre-btn" data-filtre="rarete" data-valeur="M">Mythos</button>
+<button type="button" class="filtre-btn" data-filtre="rarete" data-valeur="L">Legendaire</button>
+</div>
+</div>
+
+<div class="filtre-groupe">
+<span class="filtre-label">Groupe</span>
+<div class="filtre-boutons" id="filtres-groupe">
+<button type="button" class="filtre-btn actif" data-filtre="groupe" data-valeur="tous">Tous</button>
+<button type="button" class="filtre-btn" data-filtre="groupe" data-valeur="Leaf Village">Leaf Village</button>
+<button type="button" class="filtre-btn" data-filtre="groupe" data-valeur="Akatsuki">Akatsuki</button>
+</div>
+</div>
+
+<div class="filtre-groupe">
+<span class="filtre-label">Puissance min</span>
+<div class="filtre-slider">
+<input type="range" id="slider-power" min="0" max="8" value="0" step="1">
+<span class="slider-valeur" id="slider-valeur">0</span>
+</div>
+</div>
+
+<div class="filtre-resultat">
+<span id="compteur-cartes">13</span> cartes affichées
+</div>
+</section>
+
+<!-- Grille des cartes, generee partiellement par JS pour l'effet d'apparition -->
+<section class="grille-cartes" id="grille-cartes">
+
+<article class="carte" data-rarete="C" data-groupe="Leaf Village" data-power="3" data-chakra="3">
+<div class="carte-cadre">
+<img src="../images/cards/KS-001-C.webp" alt="Carte Hiruzen Sarutobi Le Professeur, commune, set Konoha Shido numero 001">
+<div class="carte-rarete-pastille" data-rarete="C">C</div>
+</div>
+<div class="carte-info">
+<h3>HIRUZEN SARUTOBI</h3>
+<p class="carte-titre">Le Professeur</p>
+<div class="carte-stats">
+<span>Chakra <strong>3</strong></span>
+<span>Puissance <strong>3</strong></span>
+</div>
+</div>
+</article>
+
+<article class="carte" data-rarete="C" data-groupe="Leaf Village" data-power="3" data-chakra="3">
+<div class="carte-cadre">
+<img src="../images/cards/KS-003-C.webp" alt="Carte Tsunade Maitre Ninja Medical, commune, set Konoha Shido numero 003">
+<div class="carte-rarete-pastille" data-rarete="C">C</div>
+</div>
+<div class="carte-info">
+<h3>TSUNADE</h3>
+<p class="carte-titre">Maître Ninja Médical</p>
+<div class="carte-stats">
+<span>Chakra <strong>3</strong></span>
+<span>Puissance <strong>3</strong></span>
+</div>
+</div>
+</article>
+
+<article class="carte" data-rarete="UC" data-groupe="Leaf Village" data-power="4" data-chakra="3">
+<div class="carte-cadre">
+<img src="../images/cards/KS-014-UC.webp" alt="Carte Sasuke Uchiha Sharingan, peu commune, set Konoha Shido numero 014">
+<div class="carte-rarete-pastille" data-rarete="UC">UC</div>
+</div>
+<div class="carte-info">
+<h3>SASUKE UCHIWA</h3>
+<p class="carte-titre">Sharingan</p>
+<div class="carte-stats">
+<span>Chakra <strong>3</strong></span>
+<span>Puissance <strong>4</strong></span>
+</div>
+</div>
+</article>
+
+<article class="carte" data-rarete="UC" data-groupe="Leaf Village" data-power="0" data-chakra="3">
+<div class="carte-cadre">
+<img src="../images/cards/KS-020-UC.webp" alt="Carte Ino Yamanaka Mind Transfer Jutsu, peu commune, set Konoha Shido numero 020">
+<div class="carte-rarete-pastille" data-rarete="UC">UC</div>
+</div>
+<div class="carte-info">
+<h3>INO YAMANAKA</h3>
+<p class="carte-titre">Mind Transfer Jutsu</p>
+<div class="carte-stats">
+<span>Chakra <strong>3</strong></span>
+<span>Puissance <strong>0</strong></span>
+</div>
+</div>
+</article>
+
+<article class="carte est-holo" data-rarete="R" data-groupe="Leaf Village" data-power="6" data-chakra="6">
+<div class="carte-cadre">
+<img src="../images/cards/KS-105-R.webp" alt="Carte Jiraya Jutsu d'Invocation, rare, set Konoha Shido numero 105">
+<div class="carte-rarete-pastille" data-rarete="R">R</div>
+<div class="carte-holo" aria-hidden="true"></div>
+<div class="carte-glare" aria-hidden="true"></div>
+</div>
+<div class="carte-info">
+<h3>JIRAYA</h3>
+<p class="carte-titre">Jutsu d'Invocation</p>
+<div class="carte-stats">
+<span>Chakra <strong>6</strong></span>
+<span>Puissance <strong>6</strong></span>
+</div>
+</div>
+</article>
+
+<article class="carte est-holo" data-rarete="R" data-groupe="Leaf Village" data-power="5" data-chakra="5">
+<div class="carte-cadre">
+<img src="../images/cards/KS-108-R.webp" alt="Carte Naruto Uzumaki Fureur du Rasengan, rare, set Konoha Shido numero 108">
+<div class="carte-rarete-pastille" data-rarete="R">R</div>
+<div class="carte-holo" aria-hidden="true"></div>
+<div class="carte-glare" aria-hidden="true"></div>
+</div>
+<div class="carte-info">
+<h3>NARUTO UZUMAKI</h3>
+<p class="carte-titre">Fureur du Rasengan</p>
+<div class="carte-stats">
+<span>Chakra <strong>5</strong></span>
+<span>Puissance <strong>5</strong></span>
+</div>
+</div>
+</article>
+
+<article class="carte est-holo" data-rarete="R" data-groupe="Leaf Village" data-power="4" data-chakra="5">
+<div class="carte-cadre">
+<img src="../images/cards/KS-110-R.webp" alt="Carte Ino Yamanaka Jutsu de Destruction Mentale, rare, set Konoha Shido numero 110">
+<div class="carte-rarete-pastille" data-rarete="R">R</div>
+<div class="carte-holo" aria-hidden="true"></div>
+<div class="carte-glare" aria-hidden="true"></div>
+</div>
+<div class="carte-info">
+<h3>INO YAMANAKA</h3>
+<p class="carte-titre">Jutsu de Destruction Mentale</p>
+<div class="carte-stats">
+<span>Chakra <strong>5</strong></span>
+<span>Puissance <strong>4</strong></span>
+</div>
+</div>
+</article>
+
+<article class="carte est-holo" data-rarete="R" data-groupe="Leaf Village" data-power="4" data-chakra="4">
+<div class="carte-cadre">
+<img src="../images/cards/KS-118-R.webp" alt="Carte Tenten Rising Twin Dragons, rare, set Konoha Shido numero 118">
+<div class="carte-rarete-pastille" data-rarete="R">R</div>
+<div class="carte-holo" aria-hidden="true"></div>
+<div class="carte-glare" aria-hidden="true"></div>
+</div>
+<div class="carte-info">
+<h3>TENTEN</h3>
+<p class="carte-titre">Rising Twin Dragons</p>
+<div class="carte-stats">
+<span>Chakra <strong>4</strong></span>
+<span>Puissance <strong>4</strong></span>
+</div>
+</div>
+</article>
+
+<article class="carte est-holo" data-rarete="S" data-groupe="Leaf Village" data-power="6" data-chakra="6">
+<div class="carte-cadre">
+<img src="../images/cards/KS-133-S.webp" alt="Carte Naruto Uzumaki Rasengan, secrete, set Konoha Shido numero 133">
+<div class="carte-rarete-pastille" data-rarete="S">S</div>
+<div class="carte-holo" aria-hidden="true"></div>
+<div class="carte-glare" aria-hidden="true"></div>
+</div>
+<div class="carte-info">
+<h3>NARUTO UZUMAKI</h3>
+<p class="carte-titre">Rasengan</p>
+<div class="carte-stats">
+<span>Chakra <strong>6</strong></span>
+<span>Puissance <strong>6</strong></span>
+</div>
+</div>
+</article>
+
+<article class="carte est-holo" data-rarete="S" data-groupe="Leaf Village" data-power="8" data-chakra="7">
+<div class="carte-cadre">
+<img src="../images/cards/KS-136-S.webp" alt="Carte Sasuke Uchiha Marque maudite du Ciel, secrete, set Konoha Shido numero 136">
+<div class="carte-rarete-pastille" data-rarete="S">S</div>
+<div class="carte-holo" aria-hidden="true"></div>
+<div class="carte-glare" aria-hidden="true"></div>
+</div>
+<div class="carte-info">
+<h3>SASUKE UCHIWA</h3>
+<p class="carte-titre">Marque maudite du Ciel</p>
+<div class="carte-stats">
+<span>Chakra <strong>7</strong></span>
+<span>Puissance <strong>8</strong></span>
+</div>
+</div>
+</article>
+
+<article class="carte est-holo" data-rarete="M" data-groupe="Akatsuki" data-power="5" data-chakra="5">
+<div class="carte-cadre">
+<img src="../images/cards/KS-143-M.webp" alt="Carte Itachi Uchiha Traquant Naruto, mythos, set Konoha Shido numero 143">
+<div class="carte-rarete-pastille" data-rarete="M">M</div>
+<div class="carte-holo" aria-hidden="true"></div>
+<div class="carte-glare" aria-hidden="true"></div>
+</div>
+<div class="carte-info">
+<h3>ITACHI UCHIWA</h3>
+<p class="carte-titre">Traquant Naruto</p>
+<div class="carte-stats">
+<span>Chakra <strong>5</strong></span>
+<span>Puissance <strong>5</strong></span>
+</div>
+</div>
+</article>
+
+<article class="carte est-holo" data-rarete="M" data-groupe="Leaf Village" data-power="5" data-chakra="5">
+<div class="carte-cadre">
+<img src="../images/cards/KS-145-M.webp" alt="Carte Naruto Uzumaki Equipe 7 originelle, mythos, set Konoha Shido numero 145">
+<div class="carte-rarete-pastille" data-rarete="M">M</div>
+<div class="carte-holo" aria-hidden="true"></div>
+<div class="carte-glare" aria-hidden="true"></div>
+</div>
+<div class="carte-info">
+<h3>NARUTO UZUMAKI</h3>
+<p class="carte-titre">Équipe 7 originelle</p>
+<div class="carte-stats">
+<span>Chakra <strong>5</strong></span>
+<span>Puissance <strong>5</strong></span>
+</div>
+</div>
+</article>
+
+<article class="carte est-holo est-legendaire" data-rarete="L" data-groupe="Leaf Village" data-power="6" data-chakra="6">
+<div class="carte-cadre">
+<img src="../images/cards/KS-133-L.webp" alt="Carte Naruto Uzumaki Je serai le plus grand Hokage, legendaire, set Konoha Shido numero 133">
+<div class="carte-rarete-pastille" data-rarete="L">L</div>
+<div class="carte-holo" aria-hidden="true"></div>
+<div class="carte-glare" aria-hidden="true"></div>
+</div>
+<div class="carte-info">
+<h3>NARUTO UZUMAKI</h3>
+<p class="carte-titre">Je serai le plus grand Hokage</p>
+<div class="carte-stats">
+<span>Chakra <strong>6</strong></span>
+<span>Puissance <strong>6</strong></span>
+</div>
+</div>
+</article>
+
+</section>
+
+<!-- Message si aucun resultat, gere par le JS -->
+<div class="aucun-resultat" id="aucun-resultat" hidden>
+<p>Aucune carte ne correspond à ces filtres. Réinitialise ou essaie une autre combinaison.</p>
+<button type="button" class="filtre-btn" id="reinit">Réinitialiser les filtres</button>
+</div>
+
+</main>
+
+<footer class="pied">
+<div class="pied-inner">
+<p class="pied-signature">Matteo Chanté-Biyikli, 2026</p>
+</div>
+</footer>
+
+<script src="../js/holocard.js"></script>
+<script src="../js/cartes.js"></script>
+</body>
+</html>

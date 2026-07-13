@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Chatbot Naruto Mythos | Matteo Chanté-Biyikli</title>
+<meta name="description" content="Mini-chatbot conversationnel sur le jeu Naruto Mythos TCG et son simulateur en ligne. Plus de 8 questions/réponses, codé en JavaScript pur.">
+<meta name="author" content="Matteo Chanté-Biyikli">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Chatbot Naruto Mythos">
+<meta property="og:description" content="Mini-chatbot conversationnel sur le jeu et le simulateur Naruto Mythos.">
+
+<meta name="DC.title" content="Mini-chatbot Naruto Mythos">
+<meta name="DC.creator" content="Matteo Chanté-Biyikli">
+<meta name="DC.subject" content="chatbot, JavaScript, dialogue, regles base">
+
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/chatbot.css">
+<link rel="stylesheet" href="../css/responsive.css">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+</head>
+<body>
+
+<nav class="menu-principal" aria-label="Navigation principale">
+<div class="menu-inner">
+<a href="../index.html" class="menu-logo"><span class="marque">Matteo<span class="logo-dot">.</span></span><span class="marque-sub">L1 IED</span></a>
+<ul class="menu-links">
+<li><a href="../index.html">Accueil</a></li>
+<li><a href="cartes.html">Cartes</a></li>
+<li><a href="formulaire.html">Newsletter</a></li>
+<li><a href="chatbot.html" class="actif">Chatbot</a></li>
+<li><a href="sources.html">Sources</a></li>
+</ul>
+</div>
+</nav>
+
+<header class="hero hero-page">
+<div class="hero-inner">
+<p class="hero-petite">Exercice 7.2, mini-chatbot</p>
+<h1>Pose tes <span class="accent">questions</span></h1>
+<p class="hero-sous-titre">Un mini assistant écrit en JavaScript pur qui répond aux questions les plus fréquentes des joueurs débutants sur Naruto Mythos et sur le simulateur. Pas d'IA derrière, juste de la correspondance de mots-clés sur un petit catalogue.</p>
+</div>
+</header>
+
+<main class="contenu">
+
+<section class="bloc">
+<div class="bloc-inner">
+
+<div class="chat">
+
+<div class="chat-fil" id="chat-fil" aria-live="polite">
+<div class="bulle bulle-bot">
+<p>Salut, je suis l'assistant du site Naruto Mythos. Je peux répondre à pas mal de questions sur le jeu, le simulateur et la communauté. Tape ta question en bas, ou utilise les suggestions juste en dessous.</p>
+</div>
+</div>
+
+<div class="chat-suggestions" id="chat-suggestions" aria-label="Questions suggerees">
+<button type="button" class="chip" data-question="comment on joue ?">Comment on joue ?</button>
+<button type="button" class="chip" data-question="combien de joueurs sur le simulateur ?">Combien de joueurs ?</button>
+<button type="button" class="chip" data-question="quels sont les sets disponibles ?">Quels sets existent ?</button>
+<button type="button" class="chip" data-question="quelle carte est la plus forte ?">La carte la plus forte ?</button>
+<button type="button" class="chip" data-question="comment marche le classement elo ?">Le classement ELO ?</button>
+<button type="button" class="chip" data-question="comment acheter des cartes ?">Acheter des cartes ?</button>
+<button type="button" class="chip" data-question="qui edite naruto mythos ?">Qui édite le jeu ?</button>
+<button type="button" class="chip" data-question="y a t il des tournois ?">Des tournois ?</button>
+</div>
+
+<form class="chat-saisie" id="chat-form">
+<input type="text" id="chat-input" placeholder="Ecris ta question ici, puis appuie sur Entree" autocomplete="off" required>
+<button type="submit" class="bouton-principal">Envoyer</button>
+</form>
+
+</div>
+
+</div>
+</section>
+
+<section class="bloc">
+<div class="bloc-inner">
+<h2><span class="numero">02</span> Comment ça fonctionne</h2>
+<p>Le chatbot est un script JavaScript qui contient une petite base de connaissances, sous forme d'objets associant des mots-clés à des réponses. Quand tu envoies un message, il :</p>
+<ol class="liste-features">
+<li>Met le texte en minuscules et le compare aux entrées du catalogue.</li>
+<li>Choisit l'entrée qui a le plus de mots-clés en commun avec la question.</li>
+<li>Affiche la réponse correspondante après une petite animation de "le bot est en train d'écrire".</li>
+<li>Si rien ne matche, il propose les questions disponibles au lieu d'inventer une réponse.</li>
+</ol>
+<p>Il y a 8 questions couvertes au total, plus les variantes courantes pour chacune. Le code source est dans <code>js/chatbot.js</code>.</p>
+</div>
+</section>
+
+</main>
+
+<footer class="pied">
+<div class="pied-inner">
+<p class="pied-signature">Matteo Chanté-Biyikli, 2026</p>
+</div>
+</footer>
+
+<script src="../js/chatbot.js"></script>
+</body>
+</html>
